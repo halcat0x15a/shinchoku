@@ -1,7 +1,23 @@
-@(message: String)
+@(contents: Seq[(String, java.sql.Date)])
 
-@main("Welcome to Play") {
+<!DOCTYPE html>
 
-    @play20.welcome(message)
-
-}
+<html>
+    <head>
+        <title>Shinchoku</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        <script src="@routes.Assets.at("javascripts/hello.js")" type="text/javascript"></script>
+    </head>
+    <body>
+      <table>
+	<tr>@{for ((content, date) <- contents) yield <th>{date}</th>}</tr>
+	<tr>@{for ((content, date) <- contents) yield <td>{content}</td>}</tr>
+      </table>
+      <form action="/create/contents" method="POST">
+	<textarea name="content"></textarea>
+	<input type="date" name="date" />
+	<input type="submit" />
+      </form>
+    </body>
+</html>
